@@ -4,7 +4,7 @@
   "description": "Autosuggest react widget",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w -p",
+    "start": "webpack -w -p & open static/index.html",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
