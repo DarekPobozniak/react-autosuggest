@@ -41,7 +41,7 @@ class Autosuggest extends Component {
   }
 
   handleOnBlur = () => {
-    // this.hideItemList();
+    this.hideItemList();
   }
 
   filterItemsByValue = (inputValue) => {
@@ -89,6 +89,7 @@ class Autosuggest extends Component {
 
       case 38: // up
         if (showItemList) {
+          const listElementHeight = this.listContainer.childNodes[0].getBoundingClientRect().height;
           let newIndex;
 
           // allow carousel like selection
@@ -98,6 +99,7 @@ class Autosuggest extends Component {
             newIndex = filteredData.length - 1;
           }
 
+          this.listContainer.scrollTop = newIndex * listElementHeight;
           this.setState({ hightlightedIndex: newIndex });
         } else {
           // allow opening list on arrow press
@@ -107,6 +109,7 @@ class Autosuggest extends Component {
 
       case 40: // down
         if (showItemList) {
+          const listElementHeight = this.listContainer.childNodes[0].getBoundingClientRect().height;
           let newIndex;
 
           // allow carousel like selection
@@ -116,6 +119,7 @@ class Autosuggest extends Component {
             newIndex = 0;
           }
 
+          this.listContainer.scrollTop = newIndex * listElementHeight;
           this.setState({ hightlightedIndex: newIndex });
         } else {
           // allow opening list on arrow press
@@ -141,7 +145,7 @@ class Autosuggest extends Component {
           onBlur={this.handleOnBlur}
         />
         {showItemList &&
-          <ul>
+          <ul ref={(c) => { this.listContainer = c; }}>
             {filteredData.map((item, index) =>
               <AutosuggestItem
                 hightlightedIndex={this.state.hightlightedIndex}
