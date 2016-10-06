@@ -1,10 +1,12 @@
 {
-  "name": "react-autosuggest",
+  "name": "react-autosuggestive",
   "version": "1.0.0",
   "description": "Autosuggest react widget",
-  "main": "index.js",
+  "main": "static/bundle.js",
   "scripts": {
-    "start": "webpack -w -p & open static/index.html",
+    "start": "NODE_ENV=development webpack -w -p & open static/index.html",
+    "build": "NODE_ENV=production webpack --progress",
+    "prepublish": "npm run build",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +15,7 @@
     "autcomplete",
     "autosuggest",
     "react autosuggest",
-    "react autocomplete",
+    "react autocomplete"
   ],
   "author": "Dariusz Pobożniak",
   "license": "ISC",
