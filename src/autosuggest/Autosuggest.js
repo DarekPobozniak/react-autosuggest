@@ -2,26 +2,22 @@ import React, { Component, PropTypes } from 'react';
 
 import './autosuggest.css';
 
-const AutosuggestItem = ({ hightlightedIndex, index, label, onItemClick }) => {
-  const handleOnClick = () => {
-    onItemClick(index);
-  };
-
-  return (
-    <li className={index === hightlightedIndex ? 'active' : null} onClick={handleOnClick}>{label}</li>
-  );
-};
+const AutosuggestItem = ({ hightlightedIndex, index, label, value }) => (
+  <li className={index === hightlightedIndex ? 'active' : null} data-value={value}>{label}</li>
+);
 
 AutosuggestItem.propTypes = {
   hightlightedIndex: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
-  onItemClick: PropTypes.func.isRequired,
+  value: PropTypes.string,
 };
 
 class Autosuggest extends Component {
   static propTypes = {
     datalist: PropTypes.arrayOf('string'),
+    label: PropTypes.string,
+    value: PropTypes.string,
   };
 
   state = {
@@ -45,9 +41,11 @@ class Autosuggest extends Component {
   }
 
   filterItemsByValue = (inputValue) => {
-    const { datalist } = this.props;
-    const filteredData = datalist.filter(item =>
-      item.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+    const { datalist, label } = this.props;
+    const filteredData = datalist.filter((item) => {
+      const labelToFilter = label ? item[label] : item;
+      return labelToFilter.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
+    });
 
     this.setState({
       filteredData,
@@ -63,10 +61,18 @@ class Autosuggest extends Component {
     this.setState({ showItemList: true });
   }
 
-  fillInputSelectedValue = (itemIndex) => {
+  fillInputSelectedValue = () => {
     const { hightlightedIndex, filteredData } = this.state;
+    const { label, value } = this.props;
+    const valueToShow =
+      label ? filteredData[hightlightedIndex][label] : filteredData[hightlightedIndex];
 
-    this.input.value = filteredData[itemIndex || hightlightedIndex];
+    this.input.value = valueToShow;
+
+    if (value) {
+      this.input.dataset.value = filteredData[hightlightedIndex][value];
+    }
+
     this.hideItemList();
   }
 
@@ -134,6 +140,7 @@ class Autosuggest extends Component {
 
   render() {
     const { filteredData, showItemList } = this.state;
+    const { label, value } = this.props;
 
     return (
       <div className="autosuggest" onKeyDown={this.handleKeyDown}>
@@ -149,9 +156,9 @@ class Autosuggest extends Component {
             {filteredData.map((item, index) =>
               <AutosuggestItem
                 hightlightedIndex={this.state.hightlightedIndex}
-                onItemClick={this.fillInputSelectedValue}
                 index={index}
-                label={item}
+                label={label ? item[label] : item}
+                value={item[value]}
               />
             )}
           </ul>
