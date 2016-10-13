@@ -1,0 +1,30 @@
+.autosuggest {
+  display: inline-block;
+  position: relative;
+}
+.autosuggest input {
+  border: 1px solid #cbcbcb;
+  padding: .3em;
+}
+.autosuggest input:focus {
+  border-color: #4e9fef;
+  outline: none;
+}
+.autosuggest ul {
+  border: 1px solid #4e9fef;
+  box-sizing: border-box;
+  list-style: none;
+  max-height: 13em;
+  overflow-y: auto;
+  position: absolute;
+  margin: 0;
+  min-width: 100%;
+  padding: 0;
+  white-space: nowrap;
+}
+.autosuggest li {
+  padding: .3em;
+}
+.autosuggest .active {
+  background: #9fc6ec;
+}
