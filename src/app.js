@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-// import Autosuggest from 'autosuggest/Autosuggest';
 import Autosuggest from '../dist/main.js';
 import './index.html';
 

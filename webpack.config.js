@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const path = require('path');
 const webpack = require('webpack');
 const env = process.env.NODE_ENV;
@@ -14,6 +15,24 @@ const config = {
   output: {
     path: path.join(__dirname, './dist'),
     filename: '[name].js',
+=======
+var path = require('path');
+var webpack = require('webpack');
+var env = process.env.NODE_ENV;
+
+module.exports = {
+  // devtool: 'cheap-module-eval-source-map',
+  devtool: env === 'production' ? 'cheap-module-source-map' : 'eval-source-map',
+  context: path.join(__dirname, './src'),
+  entry: {
+    js: './autosuggest/Autosuggest.js',
+    vendor: ['react', 'react-dom'],
+  },
+  output: {
+    path: path.join(__dirname, './static'),
+    filename: 'bundle.js',
+    // publicPath: '/dist/'
+>>>>>>> master
   },
 
   module: {
@@ -40,10 +59,20 @@ const config = {
     ],
   },
 
+<<<<<<< HEAD
   /*resolve: {
     extensions: ['', '.js'],
     root: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')],
   },*/
+=======
+  resolve: {
+    extensions: ['.js'],
+    modules: [
+      path.resolve('./src'),
+      'node_modules',
+    ],
+  },
+>>>>>>> master
 
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
@@ -51,7 +80,17 @@ const config = {
       minChunks: Infinity,
       filename: 'vendor.bundle.js',
     }),
+<<<<<<< HEAD
   ],
 };
 
 module.exports = config;
+=======
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(env),
+      },
+    }),
+  ],
+};
+>>>>>>> master
