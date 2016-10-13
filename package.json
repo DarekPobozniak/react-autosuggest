@@ -2,7 +2,7 @@
   "name": "react-autosuggestive",
   "version": "1.0.5",
   "description": "Autosuggest react widget",
-  "main": "index.js",
+  "main": "./dist/main.js",
   "scripts": {
     "start": "webpack --watch --progress",
     "compile": "webpack --progress --config webpack.config.production.js",
