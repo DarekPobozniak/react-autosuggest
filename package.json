@@ -1,6 +1,6 @@
 {
-  "name": "react-autosuggest",
-  "version": "1.0.0",
+  "name": "react-autosuggestive",
+  "version": "1.0.5",
   "description": "Autosuggest react widget",
   "main": "index.js",
   "scripts": {
