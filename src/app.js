@@ -256,6 +256,7 @@ const App = () => (
       datalist={datalist}
       label="name"
       value="id"
+      currentValue="CG"
       labelKey="en_gb"
     />
   </div>

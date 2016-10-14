@@ -15,7 +15,8 @@ AutosuggestItem.propTypes = {
 
 class Autosuggest extends Component {
   static propTypes = {
-    datalist: PropTypes.array,
+    currentValue: PropTypes.string,
+    datalist: PropTypes.arrayOf(PropTypes.object),
     label: PropTypes.string,
     labelKey: PropTypes.string,
     value: PropTypes.string,
@@ -25,11 +26,35 @@ class Autosuggest extends Component {
     filteredData: [...this.props.datalist],
     hightlightedIndex: 0,
     showItemList: false,
+    currentValue: null,
+    currentDataValue: null,
+  }
+
+  componentWillMount() {
+    const { label, value, labelKey, currentValue } = this.props;
+
+    if (currentValue) {
+      const currentSelectedItem = this.props.datalist.filter(item =>
+        item[value] === currentValue
+      );
+      let valueToShow;
+
+      if (labelKey) {
+        valueToShow = currentSelectedItem[0][label][labelKey];
+      } else {
+        valueToShow = currentSelectedItem[0][label];
+      }
+
+      this.filterItemsByValue(valueToShow);
+
+      this.setState({ currentValue: valueToShow });
+      this.setState({ currentDataValue: currentValue });
+    }
   }
 
   handleOnChange = (event) => {
     this.filterItemsByValue(event.target.value);
-
+    this.setState({ currentValue: event.target.value });
     this.showItemList();
   }
 
@@ -89,10 +114,10 @@ class Autosuggest extends Component {
       itemLabel = item;
     }
 
-    this.input.value = itemLabel;
+    this.setState({ currentValue: itemLabel });
 
     if (value) {
-      this.input.dataset.value = item[value];
+      this.setState({ currentDataValue: item[value] });
     }
 
     this.hideItemList();
@@ -104,7 +129,7 @@ class Autosuggest extends Component {
     switch (event.keyCode) {
       case 13: // enter
         this.fillInputSelectedValue();
-        this.filterItemsByValue(this.input.value);
+        this.filterItemsByValue(event.target.value);
         break;
 
       case 9: // tab
@@ -161,7 +186,7 @@ class Autosuggest extends Component {
   }
 
   render() {
-    const { filteredData, showItemList } = this.state;
+    const { filteredData, showItemList, currentValue, currentDataValue } = this.state;
     const { label, value, labelKey } = this.props;
     let itemLabel;
 
@@ -169,10 +194,11 @@ class Autosuggest extends Component {
       <div className="autosuggest" onKeyDown={this.handleKeyDown}>
         <input
           type="text"
-          ref={(c) => { this.input = c; }}
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
+          value={currentValue}
+          data-value={currentDataValue}
         />
         {showItemList &&
           <ul ref={(c) => { this.listContainer = c; }}>
