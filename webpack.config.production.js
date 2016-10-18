@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 
 const config = {
   debug: true,
@@ -15,7 +14,7 @@ const config = {
 
   externals: {
     // Use external version of React
-    "react": "react"
+    react: 'react',
   },
 
   module: {
@@ -46,14 +45,6 @@ const config = {
     extensions: ['', '.js'],
     root: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')],
   },
-
-  /*plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-      filename: 'vendor.bundle.js',
-    }),
-  ],*/
 };
 
 module.exports = config;
