@@ -16,7 +16,10 @@ AutosuggestItem.propTypes = {
 class Autosuggest extends Component {
   static propTypes = {
     currentValue: PropTypes.string,
-    datalist: PropTypes.arrayOf(PropTypes.object),
+    datalist: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.object),
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
     label: PropTypes.string,
     labelKey: PropTypes.string,
     value: PropTypes.string,
@@ -26,23 +29,32 @@ class Autosuggest extends Component {
     filteredData: [...this.props.datalist],
     hightlightedIndex: 0,
     showItemList: false,
-    currentValue: null,
+    currentValue: '',
     currentDataValue: null,
   }
 
   componentWillMount() {
     const { label, value, labelKey, currentValue } = this.props;
 
+    const filterSimpleArray = item =>
+      item === currentValue;
+
+    const filterObjectArray = item =>
+      item[value] === currentValue;
+
     if (currentValue) {
-      const currentSelectedItem = this.props.datalist.filter(item =>
-        item[value] === currentValue
-      );
+      const functionToFilter = label ? filterObjectArray : filterSimpleArray;
+      const currentSelectedItem = this.props.datalist.filter(functionToFilter);
       let valueToShow;
 
-      if (labelKey) {
-        valueToShow = currentSelectedItem[0][label][labelKey];
+      if (label) {
+        if (labelKey) {
+          valueToShow = currentSelectedItem[0][label][labelKey];
+        } else {
+          valueToShow = currentSelectedItem[0][label];
+        }
       } else {
-        valueToShow = currentSelectedItem[0][label];
+        valueToShow = currentSelectedItem[0];
       }
 
       this.filterItemsByValue(valueToShow);

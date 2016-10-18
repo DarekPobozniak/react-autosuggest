@@ -1,10 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import Autosuggest from '../dist/main.js';
+import Autosuggest from '../dist/main';
 import './index.html';
 
-const datalist = [
+const simpleList = ['John', 'Anna', 'Darek', 'David'];
+
+const objectList = [
   { name: { en_gb: 'Afghanistan' }, id: 'AF' },
   { name: { en_gb: 'Åland Islands' }, id: 'AX' },
   { name: { en_gb: 'Albania' }, id: 'AL' },
@@ -251,9 +253,22 @@ const datalist = [
 
 const App = () => (
   <div>
-    <h2>Autosuggestst</h2>
+    <h2>Autosuggest</h2>
+
+    <h3>with a simple array</h3>
     <Autosuggest
-      datalist={datalist}
+      datalist={simpleList}
+    />
+
+    <h3>with a simple array with passed value</h3>
+    <Autosuggest
+      datalist={simpleList}
+      currentValue="Darek"
+    />
+
+    <h3>with an array of objects</h3>
+    <Autosuggest
+      datalist={objectList}
       label="name"
       value="id"
       currentValue="CG"
