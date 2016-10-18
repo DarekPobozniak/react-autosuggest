@@ -11,6 +11,7 @@
   outline: none;
 }
 .autosuggest ul {
+  background: #fff;
   border: 1px solid #4e9fef;
   box-sizing: border-box;
   list-style: none;
@@ -21,6 +22,7 @@
   min-width: 100%;
   padding: 0;
   white-space: nowrap;
+  z-index: 3;
 }
 .autosuggest li {
   padding: .3em;
