@@ -1,17 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-
+import AutosuggestItem from './AutosuggestItem';
 import './autosuggest.css';
-
-const AutosuggestItem = ({ hightlightedIndex, index, label, value }) => (
-  <li className={index === hightlightedIndex ? 'active' : null} data-value={value}>{label}</li>
-);
-
-AutosuggestItem.propTypes = {
-  hightlightedIndex: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
-  label: PropTypes.string,
-  value: PropTypes.string,
-};
 
 class Autosuggest extends Component {
   static propTypes = {
@@ -19,7 +8,7 @@ class Autosuggest extends Component {
     datalist: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.object),
       PropTypes.arrayOf(PropTypes.string),
-    ]),
+    ]).isRequired,
     label: PropTypes.string,
     labelKey: PropTypes.string,
     value: PropTypes.string,
